@@ -1,0 +1,111 @@
+---
+const activities = [
+  { message: 'Mesa 5 - Nuevo pedido recibido', time: 'hace 2 min', type: 'new', detail: '3 items - S/ 85.00' },
+  { message: 'Pedido #1847 - Entregado', time: 'hace 5 min', type: 'delivered', detail: 'Mesa 12' },
+  { message: 'Mesa 8 - Pago procesado', time: 'hace 8 min', type: 'payment', detail: 'S/ 124.00 - Visa' },
+  { message: 'Pedido #1845 - En preparación', time: 'hace 12 min', type: 'preparing', detail: 'Cocina principal' },
+  { message: 'Cliente nuevo registrado', time: 'hace 15 min', type: 'customer', detail: 'Andrea Ruiz' },
+  { message: 'Mesa 3 - Cuenta solicitada', time: 'hace 18 min', type: 'bill', detail: 'S/ 95.50' },
+  { message: 'Pedido #1843 - Completado', time: 'hace 22 min', type: 'completed', detail: 'Mesa 7' },
+  { message: 'Stock bajo: Pisco Quebranta', time: 'hace 30 min', type: 'alert', detail: '3 unidades restantes' },
+];
+
+const typeColors: Record<string, string> = {
+  new: 'var(--accent)',
+  delivered: 'var(--info)',
+  payment: 'var(--success)',
+  preparing: 'var(--warning)',
+  customer: 'var(--accent-2)',
+  bill: 'var(--text-muted)',
+  completed: 'var(--success)',
+  alert: 'var(--danger)',
+};
+---
+
+<div class="card">
+  <div class="card-title">
+    <span>
+      <span class="live-dot"></span>
+      Actividad en Vivo
+    </span>
+  </div>
+
+  <div class="activity-feed">
+    {activities.map((activity) => (
+      <div class="activity-item">
+        <div class="activity-dot" style={`background: ${typeColors[activity.type]};`}></div>
+        <div class="activity-content">
+          <div class="activity-message">{activity.message}</div>
+          <div class="activity-detail">{activity.detail}</div>
+        </div>
+        <div class="activity-time">{activity.time}</div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .live-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--success);
+    border-radius: 50%;
+    margin-right: 0.4rem;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .activity-feed {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .activity-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .activity-item:last-child {
+    border-bottom: none;
+  }
+
+  .activity-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 0.35rem;
+  }
+
+  .activity-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .activity-message {
+    font-size: 0.82rem;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .activity-detail {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-top: 0.1rem;
+  }
+
+  .activity-time {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+</style>

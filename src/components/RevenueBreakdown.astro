@@ -1,0 +1,146 @@
+---
+const categories = [
+  { name: 'Platos de fondo', percent: 45, color: 'var(--accent)', amount: 'S/ 23,553' },
+  { name: 'Entradas', percent: 20, color: 'var(--accent-2)', amount: 'S/ 10,468' },
+  { name: 'Bebidas', percent: 18, color: 'var(--warning)', amount: 'S/ 9,421' },
+  { name: 'Postres', percent: 12, color: 'var(--success)', amount: 'S/ 6,281' },
+  { name: 'Otros', percent: 5, color: 'var(--danger)', amount: 'S/ 2,617' },
+];
+---
+
+<div class="card">
+  <div class="card-title">
+    <span>Ingresos por Categoría</span>
+  </div>
+
+  <div class="donut-container">
+    <div class="donut">
+      <svg viewBox="0 0 36 36" class="donut-svg">
+        <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--bg-hover)" stroke-width="3" />
+        <!-- Platos de fondo 45% -->
+        <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--accent)" stroke-width="3"
+          stroke-dasharray="45 55" stroke-dashoffset="25" stroke-linecap="round" />
+        <!-- Entradas 20% -->
+        <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--accent-2)" stroke-width="3"
+          stroke-dasharray="20 80" stroke-dashoffset="80" stroke-linecap="round" />
+        <!-- Bebidas 18% -->
+        <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--warning)" stroke-width="3"
+          stroke-dasharray="18 82" stroke-dashoffset="60" stroke-linecap="round" />
+        <!-- Postres 12% -->
+        <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--success)" stroke-width="3"
+          stroke-dasharray="12 88" stroke-dashoffset="42" stroke-linecap="round" />
+        <!-- Otros 5% -->
+        <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--danger)" stroke-width="3"
+          stroke-dasharray="5 95" stroke-dashoffset="30" stroke-linecap="round" />
+      </svg>
+      <div class="donut-center">
+        <span class="donut-total">S/ 52,340</span>
+        <span class="donut-label">Total</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="category-list">
+    {categories.map((cat) => (
+      <div class="category-item">
+        <div class="category-left">
+          <span class="category-dot" style={`background: ${cat.color};`}></span>
+          <span class="category-name">{cat.name}</span>
+        </div>
+        <div class="category-right">
+          <span class="category-amount">{cat.amount}</span>
+          <span class="category-percent">{cat.percent}%</span>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .donut-container {
+    display: flex;
+    justify-content: center;
+    margin: 0.5rem 0 1.5rem;
+  }
+
+  .donut {
+    position: relative;
+    width: 140px;
+    height: 140px;
+  }
+
+  .donut-svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+
+  .donut-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .donut-total {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .donut-label {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+  }
+
+  .category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .category-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .category-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .category-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .category-name {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .category-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .category-amount {
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .category-percent {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    min-width: 30px;
+    text-align: right;
+  }
+</style>

@@ -1,0 +1,82 @@
+---
+const orders = [
+  { id: '#1852', client: 'María García', items: 'Lomo Saltado, Chicha Morada', total: 'S/ 68.00', status: 'Completado', statusClass: 'badge-success', time: '14:32' },
+  { id: '#1851', client: 'Juan Rodríguez', items: 'Ceviche Clásico x2, Pisco Sour', total: 'S/ 124.00', status: 'En Preparación', statusClass: 'badge-warning', time: '14:28' },
+  { id: '#1850', client: 'Rosa Huamán', items: 'Ají de Gallina, Limonada', total: 'S/ 42.50', status: 'Entregado', statusClass: 'badge-info', time: '14:15' },
+  { id: '#1849', client: 'Pedro Quispe', items: 'Arroz con Mariscos, Cerveza', total: 'S/ 58.00', status: 'Completado', statusClass: 'badge-success', time: '14:05' },
+  { id: '#1848', client: 'Ana Flores', items: 'Causa Limeña, Suspiro Limeño', total: 'S/ 45.00', status: 'Cancelado', statusClass: 'badge-danger', time: '13:52' },
+  { id: '#1847', client: 'Carlos Vargas', items: 'Pollo a la Brasa, Papas, Inca Kola', total: 'S/ 72.00', status: 'Entregado', statusClass: 'badge-info', time: '13:45' },
+  { id: '#1846', client: 'Lucía Mendoza', items: 'Tacu Tacu con Lomo', total: 'S/ 52.00', status: 'Completado', statusClass: 'badge-success', time: '13:30' },
+  { id: '#1845', client: 'Fernando Castillo', items: 'Seco de Cordero, Chicha', total: 'S/ 55.50', status: 'Completado', statusClass: 'badge-success', time: '13:18' },
+];
+---
+
+<div class="card">
+  <div class="card-title">
+    <span>Pedidos Recientes</span>
+    <a href="/pedidos" class="view-all">Ver todos</a>
+  </div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Pedido</th>
+          <th>Cliente</th>
+          <th>Items</th>
+          <th>Total</th>
+          <th>Estado</th>
+          <th>Hora</th>
+        </tr>
+      </thead>
+      <tbody>
+        {orders.map((order) => (
+          <tr>
+            <td class="order-id">{order.id}</td>
+            <td class="client-name">{order.client}</td>
+            <td class="order-items">{order.items}</td>
+            <td class="order-total">{order.total}</td>
+            <td><span class={`badge ${order.statusClass}`}>{order.status}</span></td>
+            <td class="order-time">{order.time}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<style>
+  .view-all {
+    font-size: 0.8rem;
+    color: var(--accent);
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .view-all:hover {
+    color: var(--accent-2);
+  }
+
+  .order-id {
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .client-name {
+    font-weight: 500;
+  }
+
+  .order-items {
+    color: var(--text-muted);
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .order-total {
+    font-weight: 600;
+  }
+
+  .order-time {
+    color: var(--text-muted);
+  }
+</style>

@@ -1,0 +1,153 @@
+---
+const stats = [
+  {
+    label: 'Ventas del Día',
+    value: 'S/ 8,450',
+    change: '+12.5%',
+    trend: 'up',
+    subtitle: 'vs ayer',
+    icon: 'M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6',
+    color: 'var(--success)',
+  },
+  {
+    label: 'Pedidos',
+    value: '147',
+    change: '+8.3%',
+    trend: 'up',
+    subtitle: 'vs ayer',
+    icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2',
+    color: 'var(--accent)',
+  },
+  {
+    label: 'Ticket Promedio',
+    value: 'S/ 57.48',
+    change: '-2.1%',
+    trend: 'down',
+    subtitle: 'vs ayer',
+    icon: 'M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82zM7 7h.01',
+    color: 'var(--danger)',
+  },
+  {
+    label: 'Clientes Nuevos',
+    value: '23',
+    change: '+15.0%',
+    trend: 'up',
+    subtitle: 'vs ayer',
+    icon: 'M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M8.5 3a4 4 0 110 8 4 4 0 010-8zM20 8v6M23 11h-6',
+    color: 'var(--accent-2)',
+  },
+];
+---
+
+<div class="stats-grid">
+  {stats.map((stat) => (
+    <div class="stat-card">
+      <div class="stat-header">
+        <div class="stat-icon" style={`background: ${stat.color}20; color: ${stat.color};`}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d={stat.icon} />
+          </svg>
+        </div>
+        <div class={`stat-change ${stat.trend === 'up' ? 'up' : 'down'}`}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            {stat.trend === 'up' ? (
+              <path d="M18 15l-6-6-6 6" />
+            ) : (
+              <path d="M6 9l6 6 6-6" />
+            )}
+          </svg>
+          <span>{stat.change}</span>
+        </div>
+      </div>
+      <div class="stat-value">{stat.value}</div>
+      <div class="stat-label">{stat.label}</div>
+      <div class="stat-subtitle">{stat.subtitle}</div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  }
+
+  .stat-card:hover {
+    border-color: rgba(108, 92, 231, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .stat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .stat-change {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+  }
+
+  .stat-change.up {
+    color: var(--success);
+    background: rgba(0, 184, 148, 0.1);
+  }
+
+  .stat-change.down {
+    color: var(--danger);
+    background: rgba(255, 118, 117, 0.1);
+  }
+
+  .stat-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+    font-weight: 500;
+  }
+
+  .stat-subtitle {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    margin-top: 0.15rem;
+  }
+
+  @media (max-width: 1200px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 600px) {
+    .stats-grid { grid-template-columns: 1fr; }
+  }
+</style>

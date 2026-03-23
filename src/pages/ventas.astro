@@ -1,0 +1,259 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Sidebar from '../components/Sidebar.astro';
+import TopBar from '../components/TopBar.astro';
+
+const monthlyStats = [
+  { label: 'Ventas Marzo', value: 'S/ 52,340', change: '+14.2%', trend: 'up' },
+  { label: 'Ventas Febrero', value: 'S/ 45,820', change: '+8.7%', trend: 'up' },
+  { label: 'Ventas Enero', value: 'S/ 42,150', change: '-3.1%', trend: 'down' },
+  { label: 'Promedio Mensual', value: 'S/ 46,770', change: '+6.6%', trend: 'up' },
+];
+
+const hourlyData = [
+  { hour: '11:00', sales: 850, percent: 17 },
+  { hour: '12:00', sales: 2400, percent: 48 },
+  { hour: '13:00', sales: 3200, percent: 64 },
+  { hour: '14:00', sales: 2800, percent: 56 },
+  { hour: '15:00', sales: 1200, percent: 24 },
+  { hour: '16:00', sales: 600, percent: 12 },
+  { hour: '17:00', sales: 400, percent: 8 },
+  { hour: '18:00', sales: 1800, percent: 36 },
+  { hour: '19:00', sales: 3800, percent: 76 },
+  { hour: '20:00', sales: 5000, percent: 100 },
+  { hour: '21:00', sales: 4200, percent: 84 },
+  { hour: '22:00', sales: 2100, percent: 42 },
+];
+
+const topCategories = [
+  { name: 'Platos de Fondo', sales: 'S/ 23,553', orders: 412, percent: 45 },
+  { name: 'Entradas', sales: 'S/ 10,468', orders: 287, percent: 20 },
+  { name: 'Bebidas', sales: 'S/ 9,421', orders: 534, percent: 18 },
+  { name: 'Postres', sales: 'S/ 6,281', orders: 198, percent: 12 },
+  { name: 'Otros', sales: 'S/ 2,617', orders: 89, percent: 5 },
+];
+
+const monthlyComparison = [
+  { month: 'Enero', revenue: 'S/ 42,150', orders: 1120, avgTicket: 'S/ 37.63', growth: '-3.1%', growthClass: 'text-danger' },
+  { month: 'Febrero', revenue: 'S/ 45,820', orders: 1245, avgTicket: 'S/ 36.80', growth: '+8.7%', growthClass: 'text-success' },
+  { month: 'Marzo', revenue: 'S/ 52,340', orders: 1480, avgTicket: 'S/ 35.36', growth: '+14.2%', growthClass: 'text-success' },
+];
+---
+
+<Layout title="GastroMetrics - Ventas">
+  <div class="dashboard-layout">
+    <Sidebar activePage="ventas" />
+    <div class="main-content">
+      <TopBar pageTitle="Ventas" />
+      <div class="page-content">
+
+        <!-- Monthly Stats -->
+        <div class="stats-row">
+          {monthlyStats.map((stat) => (
+            <div class="card stat-mini">
+              <div class="stat-mini-label">{stat.label}</div>
+              <div class="stat-mini-value">{stat.value}</div>
+              <div class={`stat-mini-change ${stat.trend === 'up' ? 'text-success' : 'text-danger'}`}>
+                {stat.change}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="grid-2-1 mt-3">
+          <!-- Sales by Hour -->
+          <div class="card">
+            <div class="card-title">
+              <span>Ventas por Hora</span>
+              <span class="text-xs text-muted">Hoy</span>
+            </div>
+            <div class="hour-chart">
+              {hourlyData.map((item) => (
+                <div class="hour-row">
+                  <span class="hour-label">{item.hour}</span>
+                  <div class="hour-bar-track">
+                    <div class="hour-bar-fill" style={`width: ${item.percent}%;`}></div>
+                  </div>
+                  <span class="hour-value">S/ {item.sales.toLocaleString()}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Top Categories -->
+          <div class="card">
+            <div class="card-title">
+              <span>Top Categorías</span>
+              <span class="text-xs text-muted">Este mes</span>
+            </div>
+            <div class="categories-list">
+              {topCategories.map((cat) => (
+                <div class="cat-item">
+                  <div class="cat-header">
+                    <span class="cat-name">{cat.name}</span>
+                    <span class="cat-sales">{cat.sales}</span>
+                  </div>
+                  <div class="cat-meta">{cat.orders} pedidos &middot; {cat.percent}% del total</div>
+                  <div class="progress-bar mt-1">
+                    <div class="progress-bar-fill" style={`width: ${cat.percent}%;`}></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <!-- Monthly Comparison -->
+        <div class="card mt-3">
+          <div class="card-title">
+            <span>Comparativa Mensual</span>
+            <span class="text-xs text-muted">2026</span>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Mes</th>
+                  <th>Ingresos</th>
+                  <th>Pedidos</th>
+                  <th>Ticket Promedio</th>
+                  <th>Crecimiento</th>
+                </tr>
+              </thead>
+              <tbody>
+                {monthlyComparison.map((row) => (
+                  <tr>
+                    <td class="font-semibold">{row.month}</td>
+                    <td class="font-semibold">{row.revenue}</td>
+                    <td>{row.orders}</td>
+                    <td>{row.avgTicket}</td>
+                    <td class={row.growthClass + ' font-semibold'}>{row.growth}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .stat-mini {
+    text-align: center;
+  }
+
+  .stat-mini-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-mini-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .stat-mini-change {
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-top: 0.25rem;
+  }
+
+  .hour-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .hour-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hour-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    min-width: 40px;
+    font-weight: 500;
+  }
+
+  .hour-bar-track {
+    flex: 1;
+    height: 20px;
+    background: var(--bg-hover);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .hour-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    border-radius: 4px;
+    transition: width 0.6s ease;
+    opacity: 0.8;
+  }
+
+  .hour-value {
+    font-size: 0.75rem;
+    font-weight: 600;
+    min-width: 65px;
+    text-align: right;
+    color: var(--text-muted);
+  }
+
+  .categories-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .cat-item {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cat-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .cat-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.2rem;
+  }
+
+  .cat-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .cat-sales {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--success);
+  }
+
+  .cat-meta {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    margin-bottom: 0.4rem;
+  }
+
+  @media (max-width: 1200px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 600px) {
+    .stats-row { grid-template-columns: 1fr; }
+  }
+</style>

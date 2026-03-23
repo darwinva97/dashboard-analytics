@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Sidebar from '../components/Sidebar.astro';
+import TopBar from '../components/TopBar.astro';
+import StatsCards from '../components/StatsCards.astro';
+import SalesChart from '../components/SalesChart.astro';
+import PopularDishes from '../components/PopularDishes.astro';
+import RecentOrders from '../components/RecentOrders.astro';
+import RevenueBreakdown from '../components/RevenueBreakdown.astro';
+import LiveActivity from '../components/LiveActivity.astro';
+---
+
+<Layout title="GastroMetrics - Dashboard">
+  <div class="dashboard-layout">
+    <Sidebar activePage="dashboard" />
+    <div class="main-content">
+      <TopBar pageTitle="Dashboard" />
+      <div class="page-content">
+        <StatsCards />
+        <div class="grid-2-1 mt-3">
+          <SalesChart />
+          <PopularDishes />
+        </div>
+        <div class="grid-2-1 mt-3">
+          <RecentOrders />
+          <div class="right-stack">
+            <RevenueBreakdown />
+            <LiveActivity />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .right-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+</style>

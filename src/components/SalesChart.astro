@@ -1,0 +1,209 @@
+---
+const days = [
+  { label: 'Lun', value: 6800, height: 68 },
+  { label: 'Mar', value: 7200, height: 72 },
+  { label: 'Mié', value: 6400, height: 64 },
+  { label: 'Jue', value: 8100, height: 81 },
+  { label: 'Vie', value: 9500, height: 95 },
+  { label: 'Sáb', value: 10000, height: 100 },
+  { label: 'Dom', value: 4340, height: 43 },
+];
+---
+
+<div class="card sales-chart">
+  <div class="card-title">
+    <span>Ventas de la Semana</span>
+    <div class="chart-legend">
+      <span class="legend-total">Total: <strong>S/ 52,340</strong></span>
+    </div>
+  </div>
+
+  <div class="chart-container">
+    <div class="chart-y-axis">
+      <span>S/ 10k</span>
+      <span>S/ 7.5k</span>
+      <span>S/ 5k</span>
+      <span>S/ 2.5k</span>
+      <span>S/ 0</span>
+    </div>
+    <div class="chart-area">
+      <div class="chart-grid-lines">
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+      </div>
+      <div class="bars">
+        {days.map((day) => (
+          <div class="bar-group">
+            <div class="bar-tooltip">S/ {day.value.toLocaleString()}</div>
+            <div class="bar" style={`height: ${day.height}%;`}>
+              <div class="bar-fill"></div>
+            </div>
+            <span class="bar-label">{day.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-footer">
+    <div class="footer-item">
+      <span class="dot dot-accent"></span>
+      <span>Ventas diarias</span>
+    </div>
+    <div class="footer-item">
+      <span class="text-muted text-sm">Promedio: S/ 7,477/día</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .sales-chart {
+    min-height: 360px;
+  }
+
+  .chart-legend {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .legend-total strong {
+    color: var(--accent);
+  }
+
+  .chart-container {
+    display: flex;
+    gap: 0.5rem;
+    height: 240px;
+    margin: 1rem 0;
+  }
+
+  .chart-y-axis {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    padding-bottom: 24px;
+    min-width: 48px;
+    text-align: right;
+  }
+
+  .chart-area {
+    flex: 1;
+    position: relative;
+  }
+
+  .chart-grid-lines {
+    position: absolute;
+    inset: 0;
+    bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    pointer-events: none;
+  }
+
+  .grid-line {
+    border-bottom: 1px dashed var(--border);
+    width: 100%;
+  }
+
+  .bars {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    height: calc(100% - 24px);
+    padding: 0 0.5rem;
+    position: relative;
+  }
+
+  .bar-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+    height: 100%;
+    justify-content: flex-end;
+    position: relative;
+  }
+
+  .bar-tooltip {
+    position: absolute;
+    top: -8px;
+    background: var(--bg-hover);
+    color: var(--text);
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 5;
+  }
+
+  .bar-group:hover .bar-tooltip {
+    opacity: 1;
+  }
+
+  .bar {
+    width: 36px;
+    max-width: 100%;
+    border-radius: 6px 6px 2px 2px;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+
+  .bar-group:hover .bar {
+    transform: scaleY(1.02);
+  }
+
+  .bar-fill {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, var(--accent), var(--accent-2));
+    border-radius: 6px 6px 2px 2px;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+  }
+
+  .bar-group:hover .bar-fill {
+    opacity: 1;
+  }
+
+  .bar-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .chart-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .dot-accent {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  }
+</style>
